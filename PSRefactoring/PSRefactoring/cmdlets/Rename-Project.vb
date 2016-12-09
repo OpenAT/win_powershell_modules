@@ -38,9 +38,13 @@ Public Class Rename_Project
 
         For Each file In System.IO.Directory.GetFiles(dirname)
 
-            replace_content(file, old_name, new_name)
-
             Dim fileinfo As New System.IO.FileInfo(file)
+
+            Dim exluded_file_types = (New String() {".dll", ".nupkg"}).ToList()
+
+            If Not exluded_file_types.Contains(fileinfo.Extension.ToLower()) Then
+                replace_content(file, old_name, new_name)
+            End If
 
             Dim new_file_name As String = fileinfo.Name.Replace(old_name, new_name)
 

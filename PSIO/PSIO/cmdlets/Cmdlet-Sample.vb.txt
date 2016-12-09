@@ -1,0 +1,15 @@
+<System.Management.Automation.Cmdlet(System.Management.Automation.VerbsCommon.Cmdlet, "Sample")>
+Public Class Cmdlet_Sample
+    Inherits System.Management.Automation.PSCmdlet
+    <System.Management.Automation.Parameter(Position:=0, Mandatory:=True)>
+    Public Property param1 As String
+
+    <System.Management.Automation.Parameter(Position:=1, Mandatory:=True)>
+    Public Property param2 As String
+    Protected Overrides Sub ProcessRecord()
+
+        do stuff here
+
+    End Sub
+
+End Class

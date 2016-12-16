@@ -33,7 +33,7 @@ Public Class Invoke_TSQLCmd
 
                 cmd = New SqlClient.SqlCommand(test, conn)
 
-                Dim change As Boolean = Convert.ToBoolean(cmd.ExecuteScalar(cmd))
+                Dim change As Boolean = Convert.ToBoolean(cmd.ExecuteScalar())
 
                 If change Then
                     change_requested = True

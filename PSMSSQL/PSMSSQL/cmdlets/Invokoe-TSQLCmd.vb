@@ -33,7 +33,7 @@ Public Class Invoke_TSQLCmd
 
                 cmd = New SqlClient.SqlCommand(test, conn)
 
-                Dim change As Boolean = cmd.ExecuteScalar(cmd)
+                Dim change As Boolean = CType(cmd.ExecuteScalar(cmd), Boolean)
 
                 If change Then
                     change_requested = True
@@ -65,7 +65,7 @@ Public Class Invoke_TSQLCmd
 
         End If
 
-        If JSONOutput Then
+        If JSONOutput.IsPresent Then
             Dim output As String = "{ ""changed"" : " & change_requested.ToString().ToLower() & ", ""comment"" : """"}"
             Me.WriteObject(output)
         End If

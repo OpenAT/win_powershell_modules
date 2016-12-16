@@ -7,7 +7,7 @@ Public Class Invoke_TSQLCmd
     <System.Management.Automation.Parameter(Position:=1, Mandatory:=True)>
     Public Property Server As String
 
-    <System.Management.Automation.Parameter(Position:=2, Mandatory:=True)>
+    <System.Management.Automation.Parameter(Position:=2, Mandatory:=False)>
     Public Property TestTSQLCommand As String
 
     <System.Management.Automation.Parameter(Position:=3, Mandatory:=False)>

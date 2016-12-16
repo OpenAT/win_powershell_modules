@@ -11,7 +11,7 @@ Public Class Invoke_TSQLCmd
     Public Property TestTSQLCommand As String
 
     <System.Management.Automation.Parameter(Position:=3, Mandatory:=False)>
-    Public Property JSONOutput As New System.Management.Automation.SwitchParameter
+    Public Property JSONOutput As System.Management.Automation.SwitchParameter
     Protected Overrides Sub ProcessRecord()
 
         Dim batches = get_batches(Me.TSQLCommand)

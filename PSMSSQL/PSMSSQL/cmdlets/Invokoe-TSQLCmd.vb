@@ -6,13 +6,47 @@ Public Class Invoke_TSQLCmd
 
     <System.Management.Automation.Parameter(Position:=1, Mandatory:=True)>
     Public Property Server As String
+
+    <System.Management.Automation.Parameter(Position:=2, Mandatory:=True)>
+    Public Property TestTSQLCommand As String
+
+    <System.Management.Automation.Parameter(Position:=3, Mandatory:=False)>
+    Public Property JSONOutput As New System.Management.Automation.SwitchParameter
     Protected Overrides Sub ProcessRecord()
 
         Dim batches = get_batches(Me.TSQLCommand)
+        Dim tests = get_batches(Me.TestTSQLCommand)
 
-        If batches.Count > 0 Then
+        Dim change_requested As Boolean = True
 
-            Dim conn As New SqlClient.SqlConnection(String.Format("Data Source={0};Integrated Security=True", Server))
+        Dim conn As New SqlClient.SqlConnection(String.Format("Data Source={0};Integrated Security=True", Server))
+
+        If tests.Count > 0 Then
+
+            Dim cmd As SqlClient.SqlCommand = Nothing
+
+            conn.Open()
+
+            change_requested = False
+
+            For Each test In tests
+
+                cmd = New SqlClient.SqlCommand(test, conn)
+
+                Dim change As Boolean = cmd.ExecuteScalar(cmd)
+
+                If change Then
+                    change_requested = True
+                    Exit For
+                End If
+
+            Next
+
+            conn.Close()
+
+        End If
+
+        If batches.Count > 0 AndAlso change_requested Then
 
             Dim cmd As SqlClient.SqlCommand = Nothing
 
@@ -29,6 +63,11 @@ Public Class Invoke_TSQLCmd
 
             conn.Close()
 
+        End If
+
+        If JSONOutput Then
+            Dim output As String = "{ ""changed"" : " & change_requested.ToString().ToLower() & ", ""comment"" : """"}"
+            Me.WriteObject(output)
         End If
 
     End Sub

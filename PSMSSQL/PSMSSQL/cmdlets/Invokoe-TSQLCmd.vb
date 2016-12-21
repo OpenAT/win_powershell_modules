@@ -17,6 +17,13 @@ Public Class Invoke_TSQLCmd
         Dim batches = get_batches(Me.TSQLCommand)
         Dim tests = get_batches(Me.TestTSQLCommand)
 
+        For Each scr In tests
+            Me.WriteVerbose(scr)
+        Next
+        For Each scr In batches
+            Me.WriteVerbose(scr)
+        Next
+
         Dim change_requested As Boolean = True
 
         Dim conn As New SqlClient.SqlConnection(String.Format("Data Source={0};Integrated Security=True", Server))

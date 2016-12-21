@@ -85,26 +85,13 @@ Public Class Invoke_TSQLCmd
 
         Dim current_batch As String = ""
 
-        For Each item In TSQLCmd.Split(Environment.NewLine)
+        For Each item In System.Text.RegularExpressions.Regex.Split(TSQLCmd, "^\s*GO\s*$", Text.RegularExpressions.RegexOptions.IgnoreCase Or Text.RegularExpressions.RegexOptions.Multiline)
 
-            If item.Trim().ToLower() = "go" Then
-                res.Add(current_batch)
-                current_batch = ""
-            Else
-                current_batch &= item
+
+            If Not String.IsNullOrEmpty(item) Then
+                res.Add(item)
             End If
 
-        Next
-
-        If Not String.IsNullOrEmpty(current_batch) Then
-            res.Add(current_batch)
-        End If
-
-        For i As Integer = res.Count - 1 To 0 Step -1
-            Dim item = res(i)
-            If String.IsNullOrEmpty(item) Then
-                res.RemoveAt(i)
-            End If
         Next
 
         Return res

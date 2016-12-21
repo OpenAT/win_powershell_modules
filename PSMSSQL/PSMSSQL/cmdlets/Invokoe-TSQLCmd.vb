@@ -18,10 +18,10 @@ Public Class Invoke_TSQLCmd
         Dim tests = get_batches(Me.TestTSQLCommand)
 
         For Each scr In tests
-            Me.WriteVerbose(scr)
+            Me.WriteVerbose("/*TEST Start*/" & Environment.NewLine & scr & Environment.NewLine & "/*TEST End*/")
         Next
         For Each scr In batches
-            Me.WriteVerbose(scr)
+            Me.WriteVerbose("/*BATCH Start*/" & Environment.NewLine & scr & Environment.NewLine & "/*BATCH End*/")
         Next
 
         Dim change_requested As Boolean = True
